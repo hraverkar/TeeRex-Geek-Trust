@@ -23,4 +23,8 @@ export class DisplayComponent implements OnInit {
       this._snackbar.error(error.message, 'Error');
     });
   }
+  
+  public onAddCardClick(): void {
+    console.log('Add Card Clicked');
+  }
 }

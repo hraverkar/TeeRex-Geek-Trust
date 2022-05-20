@@ -7,7 +7,7 @@
     <mat-card-content>{{article.name}}</mat-card-content>
     <mat-card-content>{{article.price}} {{article.currency}}</mat-card-content>
     <mat-action-row>
-      <button mat-raised-button color="accent" aria-label="Favorite">
+      <button mat-raised-button color="accent" aria-label="Favorite" (click)="onAddCardClick()">
         Add to Cart
       </button>
     </mat-action-row>

@@ -8,13 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './core/header/header.component';
 import { HomeComponent } from './component/home/home.component';
 import { DisplayComponent } from './component/display/display.component';
+import { ProductComponent } from './component/product/product.component';
+import { ShoppingCartComponent } from './component/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    DisplayComponent
+    DisplayComponent,
+    ProductComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
