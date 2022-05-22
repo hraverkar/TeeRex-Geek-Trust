@@ -18,10 +18,14 @@ export class ShoppingCartComponent implements OnInit {
     this.calcTotal();
   }
 
-  modelChanged(product: ITData) {
-    // if (this.product.num === 0) {
-    //   this.productRemoved.emit(this.product);
-    // }
+  modelChanged(data: any, article: ITData) {
+    article.num = data;
+    this.calcTotalPrice();
+    this.calcTotal();
+    if (article.num === 0) {
+      let index = this.cartProductList.findIndex(i=>i.id === article.id);
+      this.cartProductList.splice(index, 1);
+    }
   }
 
   calcTotalPrice() {

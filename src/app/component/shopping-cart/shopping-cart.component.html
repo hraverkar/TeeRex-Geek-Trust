@@ -7,15 +7,15 @@
     <mat-card-content>{{article.name}}</mat-card-content>
     <mat-card-content>{{article.price}} {{article.currency}}</mat-card-content>
     <mat-action-row>
-      <input type="number" [(ngModel)]="article.num" min="0" max="{{article.quantity}}" (ngModelChange)="modelChanged($event)" />
+      <input type="number" [(ngModel)]="article.num" min="0" max="{{article.quantity}}" (ngModelChange)="modelChanged($event, article)" />
     </mat-action-row>
   </mat-card>
 
 
-  <span> Total Item Quantity :
+  <span *ngIf="totalItems !== 0 "> Total Item Quantity :
     <input matInput type="text" placeholder="Enter your name" value="{{totalItems}}" readonly>
   </span>
-  <span> Total price : 
+  <span *ngIf="totalPrice !== null"> Total price : 
     <input matInput type="text" placeholder="Enter your name" value="{{totalPrice}}" readonly>
   </span>
 </div>

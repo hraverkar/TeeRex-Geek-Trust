@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ITData } from 'src/app/interface/itdata';
 import { CartService } from 'src/app/services/cart.service';
 import { DataService } from 'src/app/services/data.service';
@@ -9,10 +10,11 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
   constructor(private _dataService: DataService, private _snackbar: SnackbarService, private _cartService: CartService) { }
   public teesData: ITData[];
+  public getAllDataSubs : Subscription;
 
   public cartProductList: any[] = [];
 
@@ -20,7 +22,7 @@ export class ProductComponent implements OnInit {
     this.getDisplaytees();
   }
   public getDisplaytees(): void {
-    this._dataService.getAllData().subscribe((res) => {
+    this.getAllDataSubs = this._dataService.getAllData().subscribe((res) => {
       this.teesData = res.body;
     }, (error) => {
       this._snackbar.error(error.message, 'Error');
@@ -37,5 +39,11 @@ export class ProductComponent implements OnInit {
       return;
     }
     productExistInCart.num += 1;
+  }
+
+  public ngOnDestroy(): void {
+      if(this.getAllDataSubs){
+        this.getAllDataSubs.unsubscribe();
+      }
   }
 }
