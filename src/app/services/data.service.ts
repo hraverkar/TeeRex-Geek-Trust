@@ -1,3 +1,4 @@
+import { ITData } from 'src/app/interface/itdata';
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ export class DataService {
 
   public getAllData() {
     return this._httpClient
-      .get<[]>(environment.API, { params: new HttpParams({}), observe: 'response' })
+      .get<ITData[]>(environment.API, { params: new HttpParams({}), observe: 'response' })
       .pipe(
         retry(3),
         catchError(this.handleError),

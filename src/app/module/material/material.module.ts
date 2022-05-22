@@ -47,6 +47,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -100,7 +101,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PortalModule,
     ScrollingModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class MaterialModule { }

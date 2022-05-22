@@ -7,16 +7,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './core/header/header.component';
 import { HomeComponent } from './component/home/home.component';
-import { DisplayComponent } from './component/display/display.component';
 import { ProductComponent } from './component/product/product.component';
 import { ShoppingCartComponent } from './component/shopping-cart/shopping-cart.component';
+import { CartService } from './services/cart.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    DisplayComponent,
     ProductComponent,
     ShoppingCartComponent
   ],
@@ -26,7 +25,7 @@ import { ShoppingCartComponent } from './component/shopping-cart/shopping-cart.c
     BrowserAnimationsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

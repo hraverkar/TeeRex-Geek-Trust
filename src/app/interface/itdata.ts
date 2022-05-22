@@ -7,5 +7,6 @@ export interface ITData {
     currency: string,
     color: string,
     gender: string,
-    quantity: number
+    quantity: number,
+    num: number
 }

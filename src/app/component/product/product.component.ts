@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ITData } from 'src/app/interface/itdata';
+import { CartService } from 'src/app/services/cart.service';
+import { DataService } from 'src/app/services/data.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +11,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _dataService: DataService, private _snackbar: SnackbarService, private _cartService: CartService) { }
+  public teesData: ITData[];
 
-  ngOnInit(): void {
+  public cartProductList: any[] = [];
+
+  public ngOnInit(): void {
+    this.getDisplaytees();
+  }
+  public getDisplaytees(): void {
+    this._dataService.getAllData().subscribe((res) => {
+      this.teesData = res.body;
+    }, (error) => {
+      this._snackbar.error(error.message, 'Error');
+    });
   }
 
+  public onAddCardClick(product: any): void {
+    console.log('Add Card Clicked');
+    const productExistInCart = this.cartProductList.find(({ id }) => id === product.id); // find product by name
+
+    if (!productExistInCart) {
+      this.cartProductList.push({ ...product, num: 1 }); // enhance "porduct" opject with "num" property
+      this._cartService.publishListOfProduct(this.cartProductList);
+      return;
+    }
+    productExistInCart.num += 1;
+  }
 }
