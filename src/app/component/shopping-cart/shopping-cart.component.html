@@ -1,21 +1,26 @@
 <div class="flex-container">
-  <mat-card class="flex-item" *ngFor="let article of cartProductList">
-    <img mat-card-image src={{article.imageURL}} alt="{{article.name}}">
-    <mat-card-header>
-      <mat-card-title></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>{{article.name}}</mat-card-content>
-    <mat-card-content>{{article.price}} {{article.currency}}</mat-card-content>
-    <mat-action-row>
-      <input type="number" [(ngModel)]="article.num" min="0" max="{{article.quantity}}" (ngModelChange)="modelChanged($event, article)" />
-    </mat-action-row>
-  </mat-card>
+    <mat-card class="flex-item" *ngFor="let article of cartProductList">
+        <img mat-card-image src={{article.imageURL}} alt="{{article.name}}">
+        <mat-card-header>
+            <mat-card-title></mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{article.name}}</mat-card-content>
+        <mat-card-content>{{article.price}} {{article.currency}}</mat-card-content>
+        <mat-action-row>
+            <input type="number" [(ngModel)]="article.num" min="0" max="{{article.quantity}}"
+                (ngModelChange)="modelChanged($event, article)" />
+        </mat-action-row>
+    </mat-card>
 
 
-  <span *ngIf="totalItems !== 0 "> Total Item Quantity :
-    <input matInput type="text" placeholder="Enter your name" value="{{totalItems}}" readonly>
-  </span>
-  <span *ngIf="totalPrice !== null"> Total price : 
-    <input matInput type="text" placeholder="Enter your name" value="{{totalPrice}}" readonly>
-  </span>
+    <span *ngIf="totalItems !== 0 "> Total Item Quantity :
+        <input matInput type="text" placeholder="Total Quantity" value="{{totalItems}}" readonly>
+    </span>
+    <div *ngIf="totalPrice !== '₹0.00'; else noItems">
+        <span> Total price: </span>
+        <input matInput type="text" placeholder="Total Price" [value]="totalPrice" readonly>
+    </div>
+    <ng-template #noItems>
+        <span>No item available in cart</span>
+    </ng-template>
 </div>

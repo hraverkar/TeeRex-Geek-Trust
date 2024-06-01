@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
+  private cartNumberSubject = new BehaviorSubject<number>(null);
+  public cartNumber$ = this.cartNumberSubject.asObservable();
 
   public listOfProduct: any;
-  constructor() { }
+  constructor() {}
 
   public publishListOfProduct(listOfProduct: any) {
     this.listOfProduct = listOfProduct;
@@ -16,5 +19,9 @@ export class CartService {
   public getQuestionData() {
     console.log(this.listOfProduct, 'get');
     return this.listOfProduct;
+  }
+
+  public getupdatedCardData(value: number) {
+    this.cartNumberSubject.next(value);
   }
 }

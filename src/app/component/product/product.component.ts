@@ -8,13 +8,16 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit, OnDestroy {
-
-  constructor(private _dataService: DataService, private _snackbar: SnackbarService, private _cartService: CartService) { }
+  constructor(
+    private _dataService: DataService,
+    private _snackbar: SnackbarService,
+    private _cartService: CartService
+  ) {}
   public teesData: ITData[];
-  public getAllDataSubs : Subscription;
+  public getAllDataSubs: Subscription;
 
   public cartProductList: any[] = [];
 
@@ -22,28 +25,41 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.getDisplaytees();
   }
   public getDisplaytees(): void {
-    this.getAllDataSubs = this._dataService.getAllData().subscribe((res) => {
-      this.teesData = res.body;
-    }, (error) => {
-      this._snackbar.error(error.message, 'Error');
-    });
+    this.getAllDataSubs = this._dataService.getAllData().subscribe(
+      (res) => {
+        this._cartService.getupdatedCardData(0);
+        this.teesData = res.body;
+      },
+      (error) => {
+        this._snackbar.error(error.message, 'Error');
+      }
+    );
   }
 
   public onAddCardClick(product: any): void {
     console.log('Add Card Clicked');
-    const productExistInCart = this.cartProductList.find(({ id }) => id === product.id); // find product by name
-
+    let count = 0;
+    // find product by name
+    const productExistInCart = this.cartProductList.find(
+      ({ id }) => id === product.id
+    );
     if (!productExistInCart) {
       this.cartProductList.push({ ...product, num: 1 }); // enhance "porduct" opject with "num" property
       this._cartService.publishListOfProduct(this.cartProductList);
-      return;
+      count = this.cartProductList.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue.num;
+      }, 0);
+      this._cartService.getupdatedCardData(count);
+    } else {
+      productExistInCart.num += 1;
+      count += productExistInCart.num;
+      this._cartService.getupdatedCardData(count);
     }
-    productExistInCart.num += 1;
   }
 
   public ngOnDestroy(): void {
-      if(this.getAllDataSubs){
-        this.getAllDataSubs.unsubscribe();
-      }
+    if (this.getAllDataSubs) {
+      this.getAllDataSubs.unsubscribe();
+    }
   }
 }
